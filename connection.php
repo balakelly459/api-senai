@@ -15,6 +15,6 @@ if ($comn->connect_error) {
     die("Connection error: " . $comn->connect_error);
 }
 
-return $comn;
+return $conn;
 
 ?>

@@ -1,32 +1,57 @@
 <?php
 
-header("Acess-Control-Allow-Origin: *");
-header("Acess-Control-Allow-Headers: *");
-header("Acess-Control-Allow-Methods: GET, POST");
-header("Content-Type: application/json");
+//dá acesso ao POSTMAN através do Apache
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: GET, POST");
+    header("Content-Type: application/json");
 
-include('connection.php');
-include('crud.php');
+    include('connection.php');
+    include('crud.php');
 
-#RECUPERA O TIPO DE AÇÃO DA REQUISIÇÃO
-$acao = $_REQUEST["acao"];
+    #RECUPERA O TIPO DE AÇÃO DA REQUISIÇÃO
+    $acao = $_REQUEST["acao"];
 
-## CRIAÇÃO DAS ROTAS ##
+    #### CRIAÇÃO DAS ROTAS ####
 
-## ROTA DO READ ##
-if ($acao == "read") {
-    read($comn);
-}
+    ## ROTA DO READ ##
+    if($acao == "readID") {
+        read($conn);
+    }
 
-## ROTA DO CREATE ##
-if ($acao == "create") {
-    $nome = $_REQUEST["nome"];
-    $sobrenome = $_REQUEST["sobrenome"];
-    $email = $_REQUEST["email"];
-    $celular = $_REQUEST["celular"];
-    $fotografia = $_REQUEST["fotografia"];
+    if($acao == "readID") {
+        $cod_pessoa = $_REQUEST["cod_pessoa"];
+        readID($cod_pessoa ,$conn);
+    }
 
-    create($nome, $sobrenome, $email, $celular, $fotografia, $comn);
-}
+    ## ROTA DO CREATE ##
+    if($acao == "create") {
+        $nome = $_REQUEST["nome"];
+        $sobrenome = $_REQUEST["sobrenome"];
+        $email = $_REQUEST["email"];
+        $celular = $_REQUEST["celular"];
+        $fotografia = $_REQUEST["fotografia"];
+
+        create($nome, $sobrenome, $email, $celular, $fotografia, $conn);
+    }
+
+    ## ROTA DO UPDATE ##
+    if($acao == "update") {
+        $cod_pessoa = $_REQUEST["cod_pessoa"];
+        $nome = $_REQUEST["nome"];
+        $sobrenome = $_REQUEST["sobrenome"];
+        $email = $_REQUEST["email"];
+        $celular = $_REQUEST["celular"];
+        $fotografia = $_REQUEST["fotografia"];
+
+        update($cod_pessoa ,$nome, $sobrenome, $email, $celular, $fotografia, $conn);
+    }
+
+    ## ROTA DO DELETE ##
+    if ($acao == "delete") {
+        $cod_pessoa = $_REQUEST["cod_pessoa"];
+        delete($cod_pessoa, $conn);
+    }
+
 
 ?>
